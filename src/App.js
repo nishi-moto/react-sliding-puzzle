@@ -1,14 +1,17 @@
+import React, { Component } from 'react';
 import './App.css';
 import Board from './Board';
+import Game from './Game';
+
+
 
 function App() {
-  return (
+    return (
     <div className="App">
-      <header className="App-header">
-       <Board />
-      </header>
+      <h1>Sliding Puzzle</h1>
+      <Board />
     </div>
-  );
+  )
 }
 
 export default App;
