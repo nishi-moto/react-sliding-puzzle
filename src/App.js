@@ -30,8 +30,8 @@ class App extends Component {
   
   renderPuzzle = () => {
     return this.state.tilesPosition.map((cell, i) => (
-      <div className="Board-cell" style={{ width: this.percentage, paddingBottom: this.percentage }}>
-        <Tile correctPosition={i} currentPosition={cell} moveHandler={this.move} key={i}/>
+      <div className="Board-cell" style={{ width: this.percentage, paddingBottom: this.percentage }} key={i}>
+        <Tile correctPosition={i} currentPosition={cell} moveHandler={this.move}/>
       </div>
     ))
   }
@@ -73,7 +73,6 @@ class App extends Component {
       </div>
     )
   }
-
 }
 
 export default App;
