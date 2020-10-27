@@ -53,6 +53,19 @@ class App extends Component {
     ))
   }
 
+  win = () => {
+    // const arrTestWin =  [0,1,2,3,4,5,6,7,8,null];
+    // const arrTestWrong =  [0,2,1,3,4,5,6,7,8,null];
+    // const arrTestZero =  [null,1,2,3,4,5,6,7,8,0];
+    const winCount = this.state.tilesPosition.filter((value, i) => {
+      return value === i  
+    });
+
+    if(winCount.length === this.state.length){
+      alert('YOU WIN!');
+    }
+  }
+
   line = (tile) => {
     return Math.floor(tile / this.state.size);
   }
@@ -65,6 +78,7 @@ class App extends Component {
       empty: from,
       score: (this.state.score + 1),
     });
+    this.win();
   }
 
   canMove = (tile) => {
