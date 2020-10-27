@@ -1,43 +1,60 @@
 import React, { Component } from 'react';
 import './App.css';
 import Tile from './Tile';
-
 class App extends Component {
   constructor(props) {
     super(props);
-    this.size = 3;
-    this.length = this.size * this.size;
     this.puzzle = [];
-    this.percentage = `${Math.floor(100 / this.size)}%`;
     this.state = {
       tilesPosition: [],
-      empty : this.length - 1
+      score: 0,
+      inputSize: 3,
+      size: 0,
+      empty: 0,
+      length: 0,
+      message: 'Insert the puzzle size:',
+      messageClass: 'Message',
     };
   }
 
   initPuzzle = () => {
-    for (let i = 0; i < this.length - 1; i++) {
+    const size = this.state.inputSize;
+    const length = size * size;
+    const empty = length - 1;
+    this.puzzle = [];
+
+    for (let i = 0; i < length - 1; i++) {
       this.puzzle[i] = i;
-    }    
+    }
     this.puzzle = this.puzzle.sort(() => Math.random() - 0.5);
-    this.puzzle[this.state.empty] = null;
-    this.setState({ ...{tilesPosition: this.puzzle}});
+    this.puzzle[empty] = null;
+    this.setState({
+      ...{
+        tilesPosition: this.puzzle,
+        size: size,
+        length: length,
+        empty: empty,
+        message: 'Insert the puzzle size:',
+        messageClass: 'Message',
+      }
+    });
   }
 
   componentDidMount = () => {
     this.initPuzzle();
   }
-  
+
   renderPuzzle = () => {
+    const percentage = `${Math.floor(100 / this.state.size)}%`;
     return this.state.tilesPosition.map((cell, i) => (
-      <div className="Board-cell" style={{ width: this.percentage, paddingBottom: this.percentage }} key={i}>
-        <Tile correctPosition={i} currentPosition={cell} moveHandler={this.move}/>
+      <div className="Board-cell" style={{ width: percentage, paddingBottom: percentage }} key={i}>
+        <Tile correctPosition={i} currentPosition={cell} moveHandler={this.move} />
       </div>
     ))
   }
- 
+
   line = (tile) => {
-    return Math.floor(tile / this.size);
+    return Math.floor(tile / this.state.size);
   }
 
   swapTiles = (from, to) => {
@@ -45,16 +62,17 @@ class App extends Component {
     [puzzle[from], puzzle[to]] = [puzzle[to], puzzle[from]];
     this.setState({
       tilesPosition: puzzle,
-      empty : from
+      empty: from,
+      score: (this.state.score + 1),
     });
   }
 
   canMove = (tile) => {
-    const emptyLine = this.line(this.state.empty, this.size);
-    const tileLine = this.line(tile, this.size);
+    const emptyLine = this.line(this.state.empty);
+    const tileLine = this.line(tile);
 
     return Math.abs(
-      Math.abs(emptyLine - tileLine) - (Math.floor(Math.abs(tile - this.state.empty) / this.size))
+      Math.abs(emptyLine - tileLine) - (Math.floor(Math.abs(tile - this.state.empty) / this.state.size))
     ) === 0;
   }
 
@@ -65,11 +83,54 @@ class App extends Component {
     this.swapTiles(tile, this.state.empty);
   }
 
+  onClickSizeHandler = event => {
+    const value = parseInt(this.state.inputSize);
+    console.log(value);
+   
+    if(value > 1 && typeof value === 'number'){
+      this.initPuzzle();
+    }
+    else if(value <= 1){
+      this.setState({
+        ...{
+          message: 'The number should be at least 2!',
+          messageClass: 'Error',
+        }
+      });
+    }
+    else{
+      this.setState({
+        ...{
+          message: 'Just numbers are allowed!',
+          messageClass: 'Error',
+        }
+      });
+    }
+  }
+
+  onChangeSizeHandler = event => {
+    this.setState({
+      ...{
+        inputSize: event.target.value,
+      }
+    });
+
+  };
+
   render() {
     return (
       <div className="App">
-        <h1>Sliding Puzzle</h1>
-         <div className="Board">{this.renderPuzzle()}</div> 
+        <h1>SLIDING PUZZLE</h1>
+        <div>   
+          <div className={this.state.messageClass}>         
+            <p>{this.state.message}</p>
+          </div>
+          <label>Size: </label>
+          <input maxlength="1" size="3" name="inputSize" value={this.state.inputSize} placeholder="" onChange={this.onChangeSizeHandler} required/>
+          <button type="button" onClick={this.onClickSizeHandler}> GO! </button>
+        </div>
+        <h2>MOVES: {this.state.score}</h2>
+        <div className="Board">{this.renderPuzzle()}</div>
       </div>
     )
   }

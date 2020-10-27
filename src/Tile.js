@@ -6,9 +6,9 @@ function Tile(props) {
 
   return (  
     <div className="Tile"  onClick={tileOnClickHandler}>
-      current position: { props.currentPosition !== null ? props.currentPosition : null}
+      v: { props.currentPosition !== null ? props.currentPosition : null}
       <br/>
-      correct position: { props.correctPosition !== null ? props.correctPosition : null}
+      k: { props.correctPosition !== null ? props.correctPosition : null}
     </div>
   );
 }
