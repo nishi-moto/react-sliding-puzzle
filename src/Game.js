@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Tile from './Tile';
+import Settings from './Settings';
 
 class Game extends Component {
     constructor(props) {
@@ -7,22 +8,16 @@ class Game extends Component {
         this.state = {
             tilesPosition: [],
             score: 0,
-            inputSizeX: 3,
-            inputSizeY: 3,
-            x: 0,
-            y: 0,
+            width: 0,
+            height: 0,
             empty: 0,
             length: 0,
-            message: 'Insert the puzzle size:',
-            messageClass: 'Message',
             win: false,
         };
     }
 
-    initPuzzle = () => {
-        const x = this.state.inputSizeX;
-        const y = this.state.inputSizeY;
-        const length = x * y;
+    initPuzzle = (width, height) => {
+        const length = width * height;
         const empty = length - 1;
         let puzzle = [];
 
@@ -35,12 +30,10 @@ class Game extends Component {
         this.setState({
             ...{
                 tilesPosition: puzzle,
-                x: x,
-                y: y,
+                width: width,
+                height: height,
                 length: length,
                 empty: empty,
-                message: 'Insert the puzzle size:',
-                messageClass: 'Message',
                 score: 0,
                 win: false,
             }
@@ -48,13 +41,13 @@ class Game extends Component {
     }
 
     componentDidMount = () => {
-        this.initPuzzle();
+        this.initPuzzle(3, 3);
     }
 
     renderPuzzle = () => {
-        const percentageX = `${Math.floor(100 / this.state.x)}%`;
+        const percentageWidth = `${Math.floor(100 / this.state.width)}%`;
         return this.state.tilesPosition.map((cell, i) => (
-            <div className="Board-cell" style={{ width: percentageX, paddingBottom: percentageX }} key={i}>
+            <div className="Board-cell" style={{ width: percentageWidth, paddingBottom: percentageWidth }} key={i}>
                 <Tile correctPosition={i} currentPosition={cell} empty={this.state.empty} moveHandler={this.move} />
             </div>
         ))
@@ -72,7 +65,7 @@ class Game extends Component {
     }
 
     row = (tile) => {
-        return Math.floor(tile / this.state.x);
+        return Math.floor(tile / this.state.width);
     }
 
     swapTiles = (from, to) => {
@@ -94,7 +87,7 @@ class Game extends Component {
     }
 
     canMoveOnSameColumn = (tile) => {
-        return Math.abs(tile - this.state.empty) === this.state.x;
+        return Math.abs(tile - this.state.empty) === this.state.width;
     }
 
     canMove = (tile) => {
@@ -107,49 +100,6 @@ class Game extends Component {
         }
     }
 
-    onClickSizeHandler = event => {
-        const valueX = this.state.inputSizeX;
-        const valueY = this.state.inputSizeY;
-
-        console.log(typeof valueX, typeof valueY);
-
-        if (valueX > 1 && valueY > 1 && typeof valueX === 'number' && typeof valueY === 'number') {
-            this.initPuzzle();
-        }
-        else if (valueX <= 1 || valueY <= 1) {
-            this.setState({
-                ...{
-                    message: 'The number should be at least 3!',
-                    messageClass: 'Error',
-                }
-            });
-        }
-        else {
-            this.setState({
-                ...{
-                    message: 'Just numbers are allowed!',
-                    messageClass: 'Error',
-                }
-            });
-        }
-    }
-
-    onChangeSizeXHandler = event => {
-        this.setState({
-            ...{
-                inputSizeX: parseInt(event.target.value),
-            }
-        });
-    };
-
-    onChangeSizeYHandler = event => {
-        this.setState({
-            ...{
-                inputSizeY: parseInt(event.target.value),
-            }
-        });
-    };
-
     componentDidUpdate = () => {
         this.win();
     }
@@ -159,16 +109,7 @@ class Game extends Component {
             <div className="Game">
 
                 <div>
-                    <div className={this.state.messageClass}>
-                        <p>{this.state.message}</p>
-                    </div>
-                    <div className="Settings">
-                        <label>Width: </label>
-                        <input maxLength="1" size="2" name="inputX" value={this.state.inputX} placeholder="" onChange={this.onChangeSizeXHandler} required />
-                        <label>  Height: </label>
-                        <input maxLength="1" size="2" name="inputY" value={this.state.inputY} placeholder="" onChange={this.onChangeSizeYHandler} required />
-                        <button className="ButtonSize" type="button" onClick={this.onClickSizeHandler}> GO! </button>
-                    </div>
+                    <Settings initPuzzle={this.initPuzzle} />
                 </div>
                 <h2>MOVES: {this.state.score}</h2>
                 <div className="Board">{this.renderPuzzle()}</div>
