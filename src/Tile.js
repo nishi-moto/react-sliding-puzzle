@@ -4,9 +4,16 @@ function Tile(props) {
     props.moveHandler(props.correctPosition);
   }
 
+  if(props.currentPosition === null){
+    return (
+      <div className="TileNull" onClick={tileOnClickHandler}>
+        <div className="TileContent"> {null}</div>
+      </div>
+    );
+  } 
   return (
     <div className="Tile" onClick={tileOnClickHandler}>
-      <div className="TileContent"> {props.currentPosition !== null ? props.currentPosition + 1 : null}</div>
+      <div className="TileContent"> {props.currentPosition + 1}</div>
     </div>
   );
 }

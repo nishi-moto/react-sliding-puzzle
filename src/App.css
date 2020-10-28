@@ -2,6 +2,7 @@
 
 body{
   font-family: 'Montserrat', sans-serif;
+  color: lightslategrey;
 }
 
 .App{
@@ -27,7 +28,7 @@ body{
 }
 
 .Tile {
-  background-color: #ccc;
+  background-color: lightblue;
   width: 100%;
   height: 0;
   padding-bottom: 100%;
@@ -35,11 +36,31 @@ body{
 }
 
 .Tile:hover{
-  background-color: #aaa;
+  background-color: lightpink;
 }
 
 .TileContent{
   padding-top: 40%;
+  color: lightslategrey;
+  font-weight: 700;
+}
+
+.TileNull{
+  background-color: lightslategrey;
+  width: 100%;
+  height: 0;
+  padding-bottom: 100%;
+  font-size: 22px; 
+}
+
+.Settings>input {
+  margin: 10px 20px 10px 3px;
+}
+
+.ButtonSize{
+  height: 30px;
+  color: lightslategrey;
+  font-weight: 600;
 }
 
 .Error {

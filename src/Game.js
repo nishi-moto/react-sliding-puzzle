@@ -72,11 +72,13 @@ class Game extends Component {
     swapTiles = (from, to) => {
         const puzzle = [...this.state.tilesPosition];
         [puzzle[from], puzzle[to]] = [puzzle[to], puzzle[from]];
-        this.setState({...{
-            tilesPosition: puzzle,
-            empty: from,
-            score: (this.state.score + 1),
-        }});
+        this.setState({
+            ...{
+                tilesPosition: puzzle,
+                empty: from,
+                score: (this.state.score + 1),
+            }
+        });
     }
 
     canMoveOnSameRow = (tile) => {
@@ -90,7 +92,7 @@ class Game extends Component {
     }
 
     canMove = (tile) => {
-        return  this.canMoveOnSameColumn(tile) || this.canMoveOnSameRow(tile);
+        return this.canMoveOnSameColumn(tile) || this.canMoveOnSameRow(tile);
     }
 
     move = (tile) => {
@@ -105,7 +107,7 @@ class Game extends Component {
 
         console.log(typeof valueX, typeof valueY);
 
-        if (valueX > 2 && valueY > 2 && typeof valueX === 'number' && typeof valueY === 'number')  {
+        if (valueX > 2 && valueY > 2 && typeof valueX === 'number' && typeof valueY === 'number') {
             this.initPuzzle();
         }
         else if (valueX <= 2 || valueY <= 2) {
@@ -150,15 +152,17 @@ class Game extends Component {
         return (
             <div className="Game">
 
-                <div>
+                <div> 
                     <div className={this.state.messageClass}>
                         <p>{this.state.message}</p>
                     </div>
-                    <label>x: </label>
-                    <input maxLength="1" size="2" name="inputX" value={this.state.inputX} placeholder="" onChange={this.onChangeSizeXHandler} required />
-                    <label>  y: </label>
-                    <input maxLength="1" size="2" name="inputY" value={this.state.inputY} placeholder="" onChange={this.onChangeSizeYHandler} required />
-                    <button type="button" onClick={this.onClickSizeHandler}> GO! </button>
+                    <div className="Settings">
+                        <label>Width: </label>
+                        <input maxLength="1" size="2" name="inputX" value={this.state.inputX} placeholder="" onChange={this.onChangeSizeXHandler} required />
+                        <label>  Height: </label>
+                        <input maxLength="1" size="2" name="inputY" value={this.state.inputY} placeholder="" onChange={this.onChangeSizeYHandler} required />
+                        <button className="ButtonSize" type="button" onClick={this.onClickSizeHandler}> GO! </button>
+                    </div>
                 </div>
                 <h2>MOVES: {this.state.score}</h2>
                 <div className="Board">{this.renderPuzzle()}</div>
