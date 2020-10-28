@@ -14,6 +14,14 @@ Another [Sliding Puzzle](https://en.wikipedia.org/wiki/Sliding_puzzle), but made
 ## Demo
 Play the live version here: [https://react-sliding-puzzle.netlify.app/](https://react-sliding-puzzle.netlify.app/)
 
+## Running locally
+Requirements:
+- Node
+- Yarn
+- React
+
+Run `yarn install` and then `yarn start`.
+
 ## To do
 
 ### Support image tiles
