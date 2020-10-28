@@ -3,7 +3,7 @@
 Another [Sliding Puzzle](https://en.wikipedia.org/wiki/Sliding_puzzle), but made with [React](https://reactjs.org/) and dynamic!
 
 
-## `Features`
+## Features
 
     - Numbered blocks
     - Responsiveness
@@ -11,9 +11,10 @@ Another [Sliding Puzzle](https://en.wikipedia.org/wiki/Sliding_puzzle), but made
     - Win condition
     - Dynamic number of blocks; with width and height input, allowing any dymension
 
+## Demo
+[https://react-sliding-puzzle.netlify.app/](https://react-sliding-puzzle.netlify.app/)
 
-
-## `To do`
+## To do
 
 ### Support image tiles
 #### Random image:
