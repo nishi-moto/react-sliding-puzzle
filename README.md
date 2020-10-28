@@ -12,7 +12,7 @@ Another [Sliding Puzzle](https://en.wikipedia.org/wiki/Sliding_puzzle), but made
     - Dynamic number of blocks; with width and height input, allowing any dymension
 
 ## Demo
-[https://react-sliding-puzzle.netlify.app/](https://react-sliding-puzzle.netlify.app/)
+Play the live version here: [https://react-sliding-puzzle.netlify.app/](https://react-sliding-puzzle.netlify.app/)
 
 ## To do
 
