@@ -15,6 +15,7 @@ class Game extends Component {
             length: 0,
             message: 'Insert the puzzle size:',
             messageClass: 'Message',
+            win: false,
         };
     }
 
@@ -41,6 +42,7 @@ class Game extends Component {
                 message: 'Insert the puzzle size:',
                 messageClass: 'Message',
                 score: 0,
+                win: false,
             }
         });
     }
@@ -59,9 +61,13 @@ class Game extends Component {
     }
 
     win = () => {
+        if (this.state.win === true) {
+            return;
+        }
         const winCount = this.state.tilesPosition.filter((value, i) => value === i);
         if (winCount.length === this.state.tilesPosition.length - 1) {
-            alert('YOU WIN!');
+            setTimeout(() => { alert('YOU WIN!'); }, 500);
+            this.setState({ ...{ win: true } });
         }
     }
 
@@ -92,7 +98,7 @@ class Game extends Component {
     }
 
     canMove = (tile) => {
-        return this.canMoveOnSameColumn(tile) || this.canMoveOnSameRow(tile);
+        return (this.canMoveOnSameColumn(tile) || this.canMoveOnSameRow(tile)) && !this.state.win;
     }
 
     move = (tile) => {
@@ -107,10 +113,10 @@ class Game extends Component {
 
         console.log(typeof valueX, typeof valueY);
 
-        if (valueX > 2 && valueY > 2 && typeof valueX === 'number' && typeof valueY === 'number') {
+        if (valueX > 1 && valueY > 1 && typeof valueX === 'number' && typeof valueY === 'number') {
             this.initPuzzle();
         }
-        else if (valueX <= 2 || valueY <= 2) {
+        else if (valueX <= 1 || valueY <= 1) {
             this.setState({
                 ...{
                     message: 'The number should be at least 3!',
@@ -152,7 +158,7 @@ class Game extends Component {
         return (
             <div className="Game">
 
-                <div> 
+                <div>
                     <div className={this.state.messageClass}>
                         <p>{this.state.message}</p>
                     </div>
